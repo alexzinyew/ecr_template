@@ -12,9 +12,7 @@ local player_removing = ecr.queue(Players.PlayerRemoving)
 
 return function(dt: number)
 	local context = world:context()
-	if not context:has(pv.ConnectedPlayers) then
-		context:add(pv.ConnectedPlayers)
-	end
+	if not context:has(pv.ConnectedPlayers) then context:add(pv.ConnectedPlayers) end
 
 	local connected = context:get(pv.ConnectedPlayers)
 

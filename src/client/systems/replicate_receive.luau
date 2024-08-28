@@ -27,11 +27,7 @@ local function diff_load(diff: pv.WorldDiff)
 			if is_tag then
 				world:add(id, ctype)
 			else
-				world:set(
-					id,
-					ctype,
-					if deserialize then deserialize(values[i]) else values[i]
-				)
+				world:set(id, ctype, if deserialize then deserialize(values[i]) else values[i])
 			end
 		end
 
