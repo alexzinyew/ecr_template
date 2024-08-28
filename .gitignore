@@ -1,3 +1,5 @@
 sourcemap.json
 packages/
 build/
+src/shared/zap/zap_client.luau
+src/shared/zap/zap_server.luau

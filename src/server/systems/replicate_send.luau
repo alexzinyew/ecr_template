@@ -85,19 +85,36 @@ local function delta_context()
 						table.insert(diff.destroyed, id)
 					end
 				else
-					if table.find(udp, cname) then changes = udp_diff.changes[cname] end
+					if table.find(udp, cname) then
+						changes = udp_diff.changes[cname]
+					end
 
 					table.insert(changes.added_or_changed.entities, id)
-					if not is_tag then table.insert(changes.added_or_changed.values, if serialize then serialize(value) else value) end
+					if not is_tag then
+						table.insert(
+							changes.added_or_changed.values,
+							if serialize then serialize(value) else value
+						)
+					end
 				end
 			end
 		end
 
 		-- tcp diff
-		if next(diff.changes) or next(diff.destroyed) then zap.replicate_world.fire_list(context:get(pv.connected_players), diff) end
+		if next(diff.changes) or next(diff.destroyed) then
+			zap.replicate_world.fire_list(
+				context:get(pv.connected_players),
+				diff
+			)
+		end
 
 		-- udp diff
-		if next(udp_diff.changes) or next(udp_diff.destroyed) then zap.udp_replicate_world.fire_list(context:get(pv.connected_players), udp_diff) end
+		if next(udp_diff.changes) or next(udp_diff.destroyed) then
+			zap.udp_replicate_world.fire_list(
+				context:get(pv.connected_players),
+				udp_diff
+			)
+		end
 
 		for _, updated in updated_pv do
 			table.clear(updated)
@@ -117,7 +134,12 @@ local function full_context(player: Player)
 
 		for id, value in world:view(ctype) do
 			table.insert(changes.added_or_changed.entities, id)
-			if not is_tag then table.insert(changes.added_or_changed.values, if serialize then serialize(value) else value) end
+			if not is_tag then
+				table.insert(
+					changes.added_or_changed.values,
+					if serialize then serialize(value) else value
+				)
+			end
 		end
 	end
 
