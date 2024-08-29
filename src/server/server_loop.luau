@@ -1,18 +1,18 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
-local ecrx = require(ReplicatedStorage.shared.ecrx)
-local gorp = require(ReplicatedStorage.packages.gorp)
+
+local loop_setup = require(ReplicatedStorage.shared.loop_setup)
+local world = require(ReplicatedStorage.shared.world)
 
 local server = ServerScriptService.server
 local systems = server.systems
 
-local scheduler = gorp.scheduler("server")
-local loop = ecrx.gameloop(scheduler, {
-	{ i = 1 },
-	systems.player,
-	systems.replicate_send,
-})
+local order: { { interval: number } | string } = {
+	{ interval = 1 },
+	"player/create_player",
 
-return function(dt)
-	loop(dt)
-end
+	{ interval = 1 },
+	"replication/general_send",
+}
+
+return loop_setup(world, systems, table.unpack(order))

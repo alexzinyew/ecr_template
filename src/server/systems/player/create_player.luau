@@ -12,32 +12,32 @@ local player_removing = ecr.queue(Players.PlayerRemoving)
 
 return function(dt: number)
 	local context = world:context()
-	if not context:has(pv.ConnectedPlayers) then context:add(pv.ConnectedPlayers) end
+	if not context:has(pv.connected_players) then context:add(pv.connected_players) end
 
-	local connected = context:get(pv.ConnectedPlayers)
+	local connected = context:get(pv.connected_players)
 
 	-- add player to world and context
 	for player in client_ready do
 		if table.find(connected, player) then return end
-		context:insert(pv.ConnectedPlayers, player)
+		context:insert(pv.connected_players, player)
 	end
 
 	for _, player in Players:GetPlayers() do
-		if world:find(pv.Player, player) then continue end
+		if world:find(pv.player, player) then continue end
 
 		local entity = world:handle()
-		entity:set(pv.Player, player)
+		entity:set(pv.player, player)
 	end
 
 	-- remove player from world and context
 	for player in player_removing do
-		context:patch(pv.ConnectedPlayers, function(players)
+		context:patch(pv.connected_players, function(players)
 			local i = table.find(players, player)
 			if i then table.remove(players, i) end
 			return players
 		end)
 
-		local id = world:find(pv.Player, player)
+		local id = world:find(pv.player, player)
 		if id then world:destroy(id) end
 	end
 end

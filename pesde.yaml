@@ -11,7 +11,7 @@ indices:
 dependencies:
   ecr:
     repo: https://www.github.com/centau/ecr
-    rev: b80288f
+    rev: 19d1fb4
     realm: shared
   gorp:
     wally: wally#aloroid/gorp-ecr
