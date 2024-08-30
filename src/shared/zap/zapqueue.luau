@@ -1,4 +1,5 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ReplicatedStorage = game:GetService "ReplicatedStorage"
+
 local ecr = require(ReplicatedStorage.packages.ecr)
 
 type set_callback<T...> = ((T...) -> ()) -> ()

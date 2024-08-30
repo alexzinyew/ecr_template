@@ -1,25 +1,23 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+--!optimize 2
+--!native
+local ReplicatedStorage = game:GetService "ReplicatedStorage"
 
+local ct = require(ReplicatedStorage.shared.ct)
 local ecr = require(ReplicatedStorage.packages.ecr)
-local pv = require(ReplicatedStorage.shared.pv)
 local serde = require(ReplicatedStorage.shared.serde)
 local world = require(ReplicatedStorage.shared.world)
 local zap = require(ReplicatedStorage.shared.zap)
-local zapqueue = require(ReplicatedStorage.shared.zapqueue)
+local zapqueue = require(ReplicatedStorage.shared.zap.zapqueue)
 
--- component names that do not replicate
-local hz0 = {}
-
+local dont_replicate = {}
 local add_only = {}
-
--- components that replicate changes over udp, removals are still tcp
 local udp = {}
 
 local function diff_table(include: { string }?)
 	local diff = {}
 	do
 		diff.changes = {}
-		for cname in next, pv do
+		for cname in next, ct do
 			if include and not table.find(include, cname) then continue end
 			diff.changes[cname] = {
 				added_or_changed = {
@@ -38,13 +36,13 @@ end
 local function delta_context()
 	local context = world:context()
 
-	local updated_pv = {} :: Map<string, Map<ecr.entity, unknown>>
+	local updated_ct = {} :: { [string]: { [ecr.entity]: unknown } }
 
-	for cname, ctype in next, pv do
+	for cname, ctype in next, ct do
 		local updated = {}
-		updated_pv[cname] = updated
+		updated_ct[cname] = updated
 
-		if table.find(hz0, cname) then continue end
+		if table.find(dont_replicate, cname) then continue end
 
 		if ecr.is_tag(ctype) then
 			world:on_add(ctype):connect(function(id)
@@ -71,8 +69,8 @@ local function delta_context()
 		local diff = diff_table()
 		local udp_diff = diff_table(udp)
 
-		for cname, updated in updated_pv do
-			local is_tag = ecr.is_tag(pv[cname])
+		for cname, updated in updated_ct do
+			local is_tag = ecr.is_tag(ct[cname])
 			local serialize = serde.ser[cname]
 
 			for id, value in updated do
@@ -97,15 +95,15 @@ local function delta_context()
 
 		-- tcp diff
 		if next(diff.changes) or next(diff.destroyed) then
-			zap.replicate_world.fire_list(context:get(pv.connected_players), diff)
+			zap.replicate_world.fire_set(context:get(ct.players_map :: any), diff)
 		end
 
 		-- udp diff
 		if next(udp_diff.changes) or next(udp_diff.destroyed) then
-			zap.udp_replicate_world.fire_list(context:get(pv.connected_players), udp_diff)
+			zap.udp_replicate_world.fire_set(context:get(ct.players_map :: any), udp_diff)
 		end
 
-		for _, updated in updated_pv do
+		for _, updated in updated_ct do
 			table.clear(updated)
 		end
 	end
@@ -114,12 +112,12 @@ end
 local function full_context(player: Player)
 	local diff = diff_table()
 
-	for cname, ctype in next, pv do
+	for cname, ctype in next, ct do
 		local is_tag = ecr.is_tag(ctype)
 		local serialize = serde.ser[cname]
 		local changes = diff.changes[cname]
 
-		if table.find(hz0, cname) then continue end
+		if table.find(dont_replicate, cname) then continue end
 
 		for id, value in world:view(ctype) do
 			table.insert(changes.added_or_changed.entities, id)

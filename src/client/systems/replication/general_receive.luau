@@ -1,11 +1,12 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ReplicatedStorage = game:GetService "ReplicatedStorage"
 
+local ct = require(ReplicatedStorage.shared.ct)
 local ecr = require(ReplicatedStorage.packages.ecr)
 local pv = require(ReplicatedStorage.shared.pv)
 local serde = require(ReplicatedStorage.shared.serde)
 local world = require(ReplicatedStorage.shared.world)
 local zap = require(ReplicatedStorage.shared.zap)
-local zapqueue = require(ReplicatedStorage.shared.zapqueue)
+local zapqueue = require(ReplicatedStorage.shared.zap.zapqueue)
 
 local function diff_load(diff: pv.WorldDiff)
 	-- process destroyed entities first
@@ -15,7 +16,7 @@ local function diff_load(diff: pv.WorldDiff)
 	end
 
 	for cname, changes in diff.changes do
-		local ctype = pv[cname]
+		local ctype = ct[cname]
 		local is_tag = ecr.is_tag(ctype)
 		local values = changes.added_or_changed.values
 		local deserialize = serde.de[cname]

@@ -1,37 +1,46 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ReplicatedStorage = game:GetService "ReplicatedStorage"
 
 local ecr = require(ReplicatedStorage.packages.ecr)
 
+export type System = (world: ecr.Registry, dt: number, start: number) -> ...(dt: number, start: number) -> ()
+export type entity = ecr.entity
+export type Registry = ecr.Registry
+
 export type WorldDiff = {
-	changes: Map<string, {
-		added_or_changed: {
-			entities: Array<ecr.entity>,
-			values: Array<unknown>,
+	changes: {
+		[string]: {
+			added_or_changed: {
+				entities: { ecr.entity },
+				values: { unknown },
+			},
+			removed: { ecr.entity },
 		},
-		removed: Array<ecr.entity>,
-	}>,
-	destroyed: Array<ecr.entity>,
+	},
+	destroyed: { ecr.entity },
 }
 
-local component = ecr.component
-local tag = ecr.tag
+export type Result<T> = {
+	result: true,
+	value: T,
+} | {
+	result: false,
+	reason: string,
+}
 
-local function primitive<T>(value: T): T
-	return component(function()
-		return value
-	end)
+local function result<T>(result: boolean, value: (T | string)?): Result<T>
+	if result then
+		return {
+			result = true,
+			value = value :: T,
+		}
+	else
+		return {
+			result = false,
+			reason = value :: string,
+		}
+	end
 end
 
--- todo: structs with nested tables
-local function struct<T>(struct: T & {}): T
-	return component(function()
-		return table.clone(struct) :: T & {}
-	end)
-end
-
-local components = ecr.name({
-	player = component() :: Player,
-	connected_players = struct({}) :: Array<Player>,
-})
-
-return table.freeze(components)
+return {
+	result = result,
+}

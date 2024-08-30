@@ -1,4 +1,4 @@
-local RunService = game:GetService("RunService")
+local RunService = game:GetService "RunService"
 
 type Server = typeof(require(script.zap_server))
 type Client = typeof(require(script.zap_client))

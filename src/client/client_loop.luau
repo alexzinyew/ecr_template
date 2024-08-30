@@ -1,6 +1,5 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ReplicatedStorage = game:GetService "ReplicatedStorage"
 
-local gorp = require(ReplicatedStorage.packages.gorp)
 local loop_setup = require(ReplicatedStorage.shared.loop_setup)
 local world = require(ReplicatedStorage.shared.world)
 

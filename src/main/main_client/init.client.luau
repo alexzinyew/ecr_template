@@ -1,6 +1,7 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local RunService = game:GetService("RunService")
+local ReplicatedStorage = game:GetService "ReplicatedStorage"
+local RunService = game:GetService "RunService"
 
+local _ct = require(ReplicatedStorage.shared.ct)
 local client_loop = require(ReplicatedStorage.client.client_loop)
 local gorp = require(ReplicatedStorage.packages.gorp)
 local pv = require(ReplicatedStorage.shared.pv)

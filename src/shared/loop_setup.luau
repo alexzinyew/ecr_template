@@ -1,5 +1,5 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local RunService = game:GetService("RunService")
+local ReplicatedStorage = game:GetService "ReplicatedStorage"
+local RunService = game:GetService "RunService"
 
 local ecr = require(ReplicatedStorage.packages.ecr)
 local gorp = require(ReplicatedStorage.packages.gorp)
@@ -30,10 +30,10 @@ local function loop_setup(
 
 	local function recurse_systems_path(dir_name: string, dir_instance: Instance)
 		for _, module in dir_instance:GetChildren() do
-			if module:IsA("Folder") then
+			if module:IsA "Folder" then
 				recurse_systems_path(`{dir_name}{module.Name}{"/"}`, module)
 			else
-				assert(module:IsA("ModuleScript"))
+				assert(module:IsA "ModuleScript")
 				local name = dir_name .. module.Name
 				assert(modules[name] == nil, `system already exists with the name {name}`)
 				modules[name] = module
