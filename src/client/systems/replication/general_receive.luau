@@ -6,7 +6,7 @@ local pv = require(ReplicatedStorage.shared.pv)
 local serde = require(ReplicatedStorage.shared.serde)
 local world = require(ReplicatedStorage.shared.world)
 local zap = require(ReplicatedStorage.shared.zap)
-local zapqueue = require(ReplicatedStorage.shared.zap.zapqueue)
+local zap_queue = require(ReplicatedStorage.shared.zap.zap_queue)
 
 local function diff_load(diff: pv.WorldDiff)
 	-- process destroyed entities first
@@ -38,8 +38,8 @@ local function diff_load(diff: pv.WorldDiff)
 	end
 end
 
-local incoming_diff = zapqueue(zap.replicate_world)
-local udp_incoming_diff = zapqueue(zap.udp_replicate_world)
+local incoming_diff = zap_queue(zap.replicate_world)
+local udp_incoming_diff = zap_queue(zap.udp_replicate_world)
 
 return function(dt: number)
 	for diff in incoming_diff do

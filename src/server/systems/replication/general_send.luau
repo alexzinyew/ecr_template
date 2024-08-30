@@ -7,7 +7,7 @@ local ecr = require(ReplicatedStorage.packages.ecr)
 local serde = require(ReplicatedStorage.shared.serde)
 local world = require(ReplicatedStorage.shared.world)
 local zap = require(ReplicatedStorage.shared.zap)
-local zapqueue = require(ReplicatedStorage.shared.zap.zapqueue)
+local zap_queue = require(ReplicatedStorage.shared.zap.zap_queue)
 
 local dont_replicate = {}
 local add_only = {}
@@ -133,7 +133,7 @@ end
 local context = delta_context()
 
 -- clients ready for initial context
-local client_ready = zapqueue(zap.client_ready)
+local client_ready = zap_queue(zap.client_ready)
 
 return function(dt: number)
 	for player in client_ready do
