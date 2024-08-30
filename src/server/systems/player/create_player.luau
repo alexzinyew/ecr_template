@@ -4,32 +4,45 @@ local ReplicatedStorage = game:GetService "ReplicatedStorage"
 local ct = require(ReplicatedStorage.shared.ct)
 local ecr = require(ReplicatedStorage.packages.ecr)
 local pv = require(ReplicatedStorage.shared.pv)
+local zap = require(ReplicatedStorage.shared.zap)
+local zap_queue = require(ReplicatedStorage.shared.zap.zap_queue)
 
 return function(world, dt)
 	local ctx = world:context()
 
 	local player_added = ecr.queue(Players.PlayerAdded)
 	local player_removing = ecr.queue(Players.PlayerRemoving)
+	local player_loaded = zap_queue(zap.client_ready)
 
-	ctx:add(ct.players_map)
+	ctx:add(ct.players_map, ct.connected_players)
 
 	return function()
+		local connected_players = ctx:get(ct.connected_players)
+
+		for player in player_loaded:iter() do
+			if table.find(connected_players, player) then continue end
+			ctx:insert(ct.connected_players, player)
+
+			for id, _player in world:view(ct.player) do
+				if _player ~= player then continue end
+				world:add(id, ct.connected)
+			end
+		end
+		player_loaded:clear()
+
 		for player in player_added:iter() do
 			local id = world:create()
-
 			world:set(id, ct.player, player)
 
-			local function add_player_to_map(map)
+			ctx:patch(ct.players_map, function(map)
 				map[player] = id
 				return map
-			end
-
-			ctx:patch(ct.players_map, add_player_to_map)
+			end)
 		end
 		player_added:clear()
 
 		for player in player_removing:iter() do
-			local function remove_player_from_map(map)
+			ctx:patch(ct.players_map, function(map)
 				local id = map[player]
 
 				if not id then return map end
@@ -37,9 +50,7 @@ return function(world, dt)
 				world:destroy(id)
 				map[player] = nil
 				return map
-			end
-
-			ctx:patch(ct.players_map, remove_player_from_map)
+			end)
 		end
 		player_removing:clear()
 	end

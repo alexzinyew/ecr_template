@@ -4,6 +4,7 @@
 local ReplicatedStorage = game:GetService "ReplicatedStorage"
 
 local ecr = require(ReplicatedStorage.packages.ecr)
+local gorp = require(ReplicatedStorage.packages.gorp)
 
 local component = ecr.component
 local tag = ecr.tag
@@ -39,6 +40,11 @@ end
 local components = ecr.name {
 	player = component() :: Player,
 	players_map = struct {} :: { [Player]: ecr.entity },
+
+	connected_players = struct {} :: { Player },
+	connected = tag(),
 }
+
+gorp.names(components :: any)
 
 return table.freeze(components)

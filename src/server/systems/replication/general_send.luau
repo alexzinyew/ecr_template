@@ -95,12 +95,12 @@ local function delta_context()
 
 		-- tcp diff
 		if next(diff.changes) or next(diff.destroyed) then
-			zap.replicate_world.fire_set(context:get(ct.players_map :: any), diff)
+			zap.replicate_world.fire_list(context:get(ct.connected_players), diff)
 		end
 
 		-- udp diff
 		if next(udp_diff.changes) or next(udp_diff.destroyed) then
-			zap.udp_replicate_world.fire_set(context:get(ct.players_map :: any), udp_diff)
+			zap.udp_replicate_world.fire_list(context:get(ct.connected_players), udp_diff)
 		end
 
 		for _, updated in updated_ct do

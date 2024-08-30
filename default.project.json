@@ -22,7 +22,7 @@
       "$className": "ServerScriptService",
       "$ignoreUnknownInstances": true,
       "main_server": {
-        "$path": "src/main/main_server",
+        "$path": "src/main/main.server.luau",
         "$ignoreUnknownInstances": true
       },
       "server": {
@@ -37,7 +37,7 @@
         "$className": "StarterPlayerScripts",
         "$ignoreUnknownInstances": true,
         "main_client": {
-          "$path": "src/main/main_client",
+          "$path": "src/main/main.client.luau",
           "$ignoreUnknownInstances": true
         }
       }
