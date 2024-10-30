@@ -1,0 +1,46 @@
+{
+    "name": "lily",
+    "tree": {
+        "$className": "DataModel",
+        "ReplicatedStorage": {
+            "$className": "ReplicatedStorage",
+            "$ignoreUnknownInstances": true,
+            "packages": {
+                "$path": "roblox_packages",
+                "$ignoreUnknownInstances": true
+            },
+            "shared": {
+                "$path": "src/shared",
+                "$ignoreUnknownInstances": true
+            },
+            "client": {
+                "$path": "src/client",
+                "$ignoreUnknownInstances": true
+            }
+        },
+        "ServerScriptService": {
+            "$className": "ServerScriptService",
+            "$ignoreUnknownInstances": true,
+            "main_server": {
+                "$path": "src/main/main.server.luau",
+                "$ignoreUnknownInstances": true
+            },
+            "server": {
+                "$path": "src/server",
+                "$ignoreUnknownInstances": true
+            }
+        },
+        "StarterPlayer": {
+            "$className": "StarterPlayer",
+            "$ignoreUnknownInstances": true,
+            "StarterPlayerScripts": {
+                "$className": "StarterPlayerScripts",
+                "$ignoreUnknownInstances": true,
+                "main_client": {
+                    "$path": "src/main/main.client.luau",
+                    "$ignoreUnknownInstances": true
+                }
+            }
+        }
+    }
+}
