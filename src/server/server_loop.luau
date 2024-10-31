@@ -16,7 +16,6 @@ gorp.hook_world(world)
 local loop = ecrx.loop(scheduler, world, {
 	{ i = 1 },
 	systems.player.create_player,
-	systems.player.canquery,
 
 	{ i = 1 },
 	systems.transform.update_transform,

@@ -5,6 +5,4 @@ local vide = require(ReplicatedStorage.packages.vide)
 
 local store = {}
 
-store.npcs = vide.source({} :: { ecr.Handle })
-
 return store

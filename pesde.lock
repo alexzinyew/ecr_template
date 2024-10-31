@@ -1,0 +1,99 @@
+name = "lily/ecr_template"
+version = "0.1.0"
+target = "roblox"
+
+[overrides."gorp>ecr"]
+repo = "https://github.com/centau/ecr"
+rev = "19d1fb4"
+
+[graph."alicesaidhi/vide_snake_case"."0.3.1-test.1 roblox"]
+direct = ["vide_snake_case", { name = "alicesaidhi/vide_snake_case", version = "^0.3.1-test.1" }]
+ty = "standard"
+
+[graph."alicesaidhi/vide_snake_case"."0.3.1-test.1 roblox".target]
+environment = "roblox"
+lib = "src/init.luau"
+build_files = ["src"]
+
+[graph."alicesaidhi/vide_snake_case"."0.3.1-test.1 roblox".pkg_ref]
+ref_ty = "pesde"
+name = "alicesaidhi/vide_snake_case"
+version = "0.3.1-test.1"
+index_url = "https://github.com/daimond113/pesde-index"
+
+[graph."alicesaidhi/vide_snake_case"."0.3.1-test.1 roblox".pkg_ref.target]
+environment = "roblox"
+lib = "src/init.luau"
+build_files = ["src"]
+
+[graph."wally#aloroid/gorp"."0.2.0-rc3 roblox"]
+ty = "standard"
+
+[graph."wally#aloroid/gorp"."0.2.0-rc3 roblox".target]
+environment = "roblox"
+lib = 'src\init.luau'
+build_files = []
+
+[graph."wally#aloroid/gorp"."0.2.0-rc3 roblox".dependencies]
+"wally#aloroid/vide-with-types" = ["0.2.7 roblox", "vide"]
+
+[graph."wally#aloroid/gorp"."0.2.0-rc3 roblox".pkg_ref]
+ref_ty = "wally"
+wally = "wally#aloroid/gorp"
+version = "0.2.0-rc3"
+index_url = "https://github.com/UpliftGames/wally-index"
+
+[graph."wally#aloroid/gorp"."0.2.0-rc3 roblox".pkg_ref.dependencies]
+vide = [{ wally = "wally#aloroid/vide-with-types", version = ">=0.2.0, <0.3.0", index = "https://github.com/UpliftGames/wally-index" }, "standard"]
+
+[graph."wally#aloroid/gorp-ecr"."0.2.0-rc3 roblox"]
+direct = ["gorp", { wally = "wally#aloroid/gorp-ecr", version = "^0.2.0-rc3" }]
+ty = "standard"
+
+[graph."wally#aloroid/gorp-ecr"."0.2.0-rc3 roblox".target]
+environment = "roblox"
+lib = 'src\init.luau'
+build_files = []
+
+[graph."wally#aloroid/gorp-ecr"."0.2.0-rc3 roblox".dependencies]
+"wally#aloroid/gorp" = ["0.2.0-rc3 roblox", "gorp"]
+"wally#centau/ecr" = ["0.8.0 roblox", "ecr"]
+
+[graph."wally#aloroid/gorp-ecr"."0.2.0-rc3 roblox".pkg_ref]
+ref_ty = "wally"
+wally = "wally#aloroid/gorp-ecr"
+version = "0.2.0-rc3"
+index_url = "https://github.com/UpliftGames/wally-index"
+
+[graph."wally#aloroid/gorp-ecr"."0.2.0-rc3 roblox".pkg_ref.dependencies]
+ecr = [{ wally = "wally#centau/ecr", version = ">=0.8.0, <0.9.0", index = "https://github.com/UpliftGames/wally-index" }, "standard"]
+gorp = [{ wally = "wally#aloroid/gorp", version = ">=0.2.0-rc3, <0.3.0", index = "https://github.com/UpliftGames/wally-index" }, "standard"]
+
+[graph."wally#aloroid/vide-with-types"."0.2.7 roblox"]
+ty = "standard"
+
+[graph."wally#aloroid/vide-with-types"."0.2.7 roblox".target]
+environment = "roblox"
+lib = 'src\init.luau'
+build_files = []
+
+[graph."wally#aloroid/vide-with-types"."0.2.7 roblox".pkg_ref]
+ref_ty = "wally"
+wally = "wally#aloroid/vide-with-types"
+version = "0.2.7"
+index_url = "https://github.com/UpliftGames/wally-index"
+
+[graph."wally#centau/ecr"."0.8.0 roblox"]
+ty = "standard"
+
+[graph."wally#centau/ecr"."0.8.0 roblox".target]
+environment = "roblox"
+lib = "src/ecr.luau"
+build_files = []
+
+[graph."wally#centau/ecr"."0.8.0 roblox".pkg_ref]
+ref_ty = "git"
+repo = "https://github.com/centau/ecr"
+tree_id = "d5b951154cce099e1de2d00268e3cfa0aaedbad5"
+new_structure = false
+target = "roblox"
