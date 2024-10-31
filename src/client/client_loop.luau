@@ -23,7 +23,7 @@ local loop = ecrx.loop(scheduler, world, {
 	systems.player.create_localplayer,
 
 	{ i = 1 },
-	systems.replication.run_zap,
+	shared.replication.run_zap,
 })
 
 return loop

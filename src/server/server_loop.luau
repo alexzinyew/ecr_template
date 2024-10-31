@@ -22,7 +22,7 @@ local loop = ecrx.loop(scheduler, world, {
 
 	{ i = 1 },
 	systems.replication.general_send,
-	systems.replication.run_zap,
+	shared.replication.run_zap,
 })
 
 return loop
