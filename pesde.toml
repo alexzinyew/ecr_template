@@ -19,6 +19,7 @@ default = "https://github.com/UpliftGames/wally-index"
 [dependencies]
 gorp = { wally = "wally#aloroid/gorp-ecr", version = "^0.2.0-rc3" }
 vide_snake_case = { name = "alicesaidhi/vide_snake_case", version = "^0.3.1-test.1" }
+ecr = { repo = "https://github.com/centau/ecr", rev = "19d1fb4" }
 
 [overrides]
 "gorp>ecr" = { repo = "https://github.com/centau/ecr", rev = "19d1fb4" }
